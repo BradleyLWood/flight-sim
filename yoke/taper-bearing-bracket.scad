@@ -1,4 +1,4 @@
-$fn = 50;
+$fn = 150;
 
 bearing_od = 47;
 bearing_length = 15;
@@ -22,13 +22,19 @@ module bearing_holder() {
    difference() {
        cube([width,height,depth], center=true);
        cylinder(h=height+2, d=bearing_od, center=true);
-       translate([-1*((mounting_hole_qty-1)*mounting_hole_spacing)/2, -1*height/2, depth/2 - mounting_hole_depth + 0.1])
+       translate([-1*((mounting_hole_qty-1)*mounting_hole_spacing)/2, -1*height/2, depth/2 - mounting_hole_depth])
            mounting_holes();
        mirror([0,0,1])
-           translate([-1*((mounting_hole_qty-1)*mounting_hole_spacing)/2, -1*height/2, depth/2 - mounting_hole_depth + 0.1])
+           translate([-1*((mounting_hole_qty-1)*mounting_hole_spacing)/2, -1*height/2, depth/2 - mounting_hole_depth])
                mounting_holes();
+       // corner cuts
+       rotate(45)
+           translate([-50,50,depth/-2 - 0.1])
+               cube([200,200,depth + 0.2]);
+       rotate(45)
+           translate([50,-50,depth/-2 - 0.1])
+               cube([200,200,depth + 0.2]);
    }
 }
 
 bearing_holder();
-//mounting_holes();
